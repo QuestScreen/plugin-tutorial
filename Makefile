@@ -1,10 +1,8 @@
-# TODO: rename PluginTemplate.so
-
-all: PluginTemplate.so
+all: discworld.so
 
 WEBFILES = \
-  web/html/myplugin.html\
-	web/js/myplugin.js
+	web/html/templates.html\
+	web/js/controllers.js
 
 generated:
 	mkdir generated
@@ -12,7 +10,7 @@ generated:
 generated/data.go: generated ${WEBFILES}
 	${GOPATH}/bin/go-bindata -o generated/data.go -pkg generated web/html web/js
 
-PluginTemplate.so: generated/data.go
+discworld.so: generated/data.go
 	go build -buildmode=plugin .
 
-.PHONY: PluginTemplate.so
+.PHONY: discworld.so
