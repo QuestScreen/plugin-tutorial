@@ -210,7 +210,7 @@ func (r *Renderer) Render(ctx api.RenderContext) {
 		Y: 0, W: curWidth, H: curHeight})
 	if r.oldTex != nil {
 		_, _, oldWidth, oldHeight, _ := r.oldTex.Query()
-		sr.Copy(r.curTex, nil, &sdl.Rect{X: screenWidth - oldWidth - 5*ctx.Unit(),
+		sr.Copy(r.oldTex, nil, &sdl.Rect{X: screenWidth - oldWidth - 5*ctx.Unit(),
 			Y: r.oldPos, W: oldWidth, H: oldHeight})
 	}
 }

@@ -1,4 +1,6 @@
-all: discworld.so
+PLUGIN_NAME=discworld
+
+all: ${PLUGIN_NAME}.so
 
 WEBFILES = \
 	web/html/templates.html\
@@ -10,7 +12,10 @@ generated:
 generated/data.go: generated ${WEBFILES}
 	${GOPATH}/bin/go-bindata -o generated/data.go -pkg generated web/html web/js
 
-discworld.so: generated/data.go
-	go build -buildmode=plugin .
+${PLUGIN_NAME}.so: generated/data.go
+	go build -buildmode=plugin -o ${PLUGIN_NAME}.so .
 
-.PHONY: discworld.so
+${PLUGIN_NAME}_debug.so: generated/data.go
+	go build -buildmode=plugin -o ${PLUGIN_NAME}_debug.so -gcflags='all=-N -l' .
+
+.PHONY: ${PLUGIN_NAME}.so ${PLUGIN_NAME}_debug.so

@@ -49,7 +49,11 @@ func (d UniversityDate) add(daysDelta int) UniversityDate {
 }
 
 func (d UniversityDate) year() int {
-	return int(d / 400) // a common year has 400 days.
+	// a common year has 400 days.
+	if d < 0 {
+		return int((d - 399) / 400) // because Go rounds towards zero
+	}
+	return int(d / 400)
 }
 
 func (d UniversityDate) month() Month {
@@ -63,7 +67,7 @@ func (d UniversityDate) dayOfMonth() int {
 		// 1-based, therefore +1
 		return int(t + 1)
 	}
-	return int(t+16)/32 + 1
+	return int(t+16)%32 + 1
 }
 
 /*
@@ -75,9 +79,9 @@ We use the term `d.add(-400*d.year())` to reach a value between 0 and 399 for mo
 // MarshalJSON returns an object containing Day, Month and Year.
 func (d UniversityDate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Day   int
-		Month string
-		Year  int
+		Day   int    `json:"day"`
+		Month string `json:"month"`
+		Year  int    `json:"year"`
 	}{
 		Day: d.dayOfMonth(), Month: d.month().String(), Year: d.year(),
 	})
@@ -86,8 +90,9 @@ func (d UniversityDate) MarshalJSON() ([]byte, error) {
 /*
 This func customizes marshaling the type to JSON.
 We used an anonymous `struct` type that contains day, month and year instead of the total days we store internally.
+With the `json:` annotation, we tell the serializer that we want lower-case fields in the resulting JSON.
 
-QuestScreen serializes data in two ways:
+Generally, QuestScreen serializes data in two ways:
 
  * Everything being sent to and received from the Web Client is serialized as JSON.
  * Everything being stored to and loaded from the file system is serialized as YAML.

@@ -22,8 +22,8 @@ var QSPlugin = api.Plugin{
 	Modules: []*api.Module{
 		&calendar.Descriptor,
 	},
-	AdditionalJS:   generated.MustAsset("web/js/myplugin.js"),
-	AdditionalHTML: generated.MustAsset("web/html/myplugin.html"),
+	AdditionalJS:   generated.MustAsset("web/js/controllers.js"),
+	AdditionalHTML: generated.MustAsset("web/html/templates.html"),
 	AdditionalCSS:  nil,
 
 	/*
@@ -71,17 +71,17 @@ var QSPlugin = api.Plugin{
 		{
 			Name: "DiscworldMain", Description: "A scene with base modules plus Discworld calendar.",
 			Config: []byte(`name: BaseMain
-	modules:
-	background:
-		enabled: true
-	herolist:
-		enabled: true
-	overlays:
-		enabled: true
-	title:
-		enabled: true
-	tutorial-discworld:
-		enabled: true`),
+modules:
+  background:
+    enabled: true
+  herolist:
+    enabled: true
+  overlays:
+    enabled: true
+  title:
+    enabled: true
+  tutorial-calendar:
+    enabled: true`),
 		},
 	},
 }
@@ -92,6 +92,8 @@ Here, we define a scene that enables all default modules plus our calendar modul
 You can enable any modules you know the ID of, so you can reference modules of other plugins here.
 There will be a warning if a module referenced by a scene template is not available, but the template will still be usable.
 This means that you can have weak dependencies on other plugins.
+
+Be very careful with inline YAML, as it must be indented with spaces, not tabs.
 */
 
 // required to compile; although never called
