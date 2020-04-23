@@ -32,8 +32,9 @@ const (
 )
 
 func (m Month) String() string {
-	return [...]string{"Ick", "Offle", "February", "March", "April", "May",
-		"June", "Grune", "August", "Spune", "Sektober", "Ember", "December"}[m]
+	return [...]string{"Ick", "Offle", "February", "March",
+		"April", "May", "June", "Grune", "August", "Spune",
+		"Sektober", "Ember", "December"}[m]
 }
 
 /*

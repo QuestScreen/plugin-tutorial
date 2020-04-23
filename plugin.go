@@ -27,11 +27,11 @@ var QSPlugin = api.Plugin{
 	AdditionalCSS:  nil,
 
 	/*
-	   This is our plugin's descriptor.
-	   Its name *must* be `QSPlugin` because that's the name the Core will search for when importing a module.
-	   All our web content goes into the `Additional*` fields.
-	   If split the code into multiple files, you must join them here into a single byte array.
-	   If you changed the file names of the web files, change them here and also update them in the `Makefile`.
+		This is our plugin's descriptor.
+		Its name *must* be `QSPlugin` because that's the name the Core will search for when importing a module.
+		All our web content goes into the `Additional*` fields.
+		If split the code into multiple files, you must join them here into a single byte array.
+		If you changed the file names of the web files, change them here and also update them in the `Makefile`.
 	*/
 
 	SystemTemplates: []api.SystemTemplate{
@@ -61,15 +61,16 @@ var QSPlugin = api.Plugin{
 	},
 
 	/*
-	   Next, we're defining a group template, so that users can quickly create a new group using our system & module.
-	   In `Config`, we reference the ID of the system config.
-	   In `Scenes`, we reference a scene template defined below, via its index.
-	   A group template must always refer to at least one scene template, since every group must have at least one scene.
+		Next, we're defining a group template, so that users can quickly create a new group using our system & module.
+		In `Config`, we reference the ID of the system config.
+		In `Scenes`, we reference a scene template defined below, via its index.
+		A group template must always refer to at least one scene template, since every group must have at least one scene.
 	*/
 
 	SceneTemplates: []api.SceneTemplate{
 		{
-			Name: "DiscworldMain", Description: "A scene with base modules plus Discworld calendar.",
+			Name:        "DiscworldMain",
+			Description: "A scene with base modules plus Discworld calendar.",
 			Config: []byte(`name: BaseMain
 modules:
   background:

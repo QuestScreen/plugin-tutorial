@@ -84,10 +84,12 @@ func (r *Renderer) createDateSheet(ctx api.RenderContext,
 	str := fmt.Sprintf("%d %s %d", d.dayOfMonth(), d.month(), d.year())
 	face := ctx.Font(
 		r.config.Font.FamilyIndex, r.config.Font.Style, r.config.Font.Size)
-	strTexture := ctx.TextToTexture(str, face, sdl.Color{R: 0, G: 0, B: 0, A: 255})
+	strTexture := ctx.TextToTexture(str, face,
+		sdl.Color{R: 0, G: 0, B: 0, A: 255})
 	_, _, strWidth, strHeight, _ := strTexture.Query()
 	bgColor := r.config.Background.Primary.WithAlpha(255)
-	canvas := ctx.CreateCanvas(strWidth+2*ctx.Unit(), strHeight+2*ctx.Unit(),
+	canvas := ctx.CreateCanvas(
+		strWidth+2*ctx.Unit(), strHeight+2*ctx.Unit(),
 		&bgColor, r.mask, api.East|api.South|api.West)
 	ctx.Renderer().Copy(strTexture, nil, &sdl.Rect{
 		X: 2 * ctx.Unit(), Y: ctx.Unit(), W: strWidth, H: strHeight})
@@ -154,7 +156,8 @@ This means that we'll render the new date at its final position, and over it the
 This is a pretty easy animation; we only need the images of the old and new date, and update the position and transparency of the old image with each step.
 */
 
-// InitTransition starts transitioning after user input changed the state.
+// InitTransition starts transitioning after user input
+// changed the state.
 func (r *Renderer) InitTransition(
 	ctx api.RenderContext, data interface{}) time.Duration {
 	r.oldTex = r.curTex
@@ -206,11 +209,13 @@ func (r *Renderer) Render(ctx api.RenderContext) {
 	sr := ctx.Renderer()
 	screenWidth, _, _ := sr.GetOutputSize()
 	_, _, curWidth, curHeight, _ := r.curTex.Query()
-	sr.Copy(r.curTex, nil, &sdl.Rect{X: screenWidth - curWidth - 5*ctx.Unit(),
+	sr.Copy(r.curTex, nil, &sdl.Rect{
+		X: screenWidth - curWidth - 5*ctx.Unit(),
 		Y: 0, W: curWidth, H: curHeight})
 	if r.oldTex != nil {
 		_, _, oldWidth, oldHeight, _ := r.oldTex.Query()
-		sr.Copy(r.oldTex, nil, &sdl.Rect{X: screenWidth - oldWidth - 5*ctx.Unit(),
+		sr.Copy(r.oldTex, nil, &sdl.Rect{
+			X: screenWidth - oldWidth - 5*ctx.Unit(),
 			Y: r.oldPos, W: oldWidth, H: oldHeight})
 	}
 }

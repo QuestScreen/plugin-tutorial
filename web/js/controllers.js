@@ -13,7 +13,8 @@ tmpl.tutorial = {
   calendar: {
     row: new Template("#tmpl-tutorial-calendar-row",
         function (ctrl, handler) {
-      for (const [index, button] of this.querySelectorAll("button").entries()) {
+      for (const [index, button] of
+          this.querySelectorAll("button").entries()) {
         button.addEventListener("click",
             () => handler.call(ctrl, tutorialCalendarSteps[index]));
       }
@@ -73,17 +74,18 @@ class TutorialCalendar {
   }
 
   async changeDay(amount) {
-    this.updateData(await App.fetch("state/tutorial-calendar", "POST", amount));
+    this.updateData(await App.fetch(
+      "state/tutorial-calendar", "POST", amount));
   }
 
   async changeMonth(amount) {
-    this.updateData(
-      await App.fetch("state/tutorial-calendar", "POST", amount * 32));
+    this.updateData(await App.fetch(
+      "state/tutorial-calendar", "POST", amount * 32));
   }
 
   async changeYear(amount) {
-    this.updateData(
-      await App.fetch("state/tutorial-calendar", "POST", amount * 400));
+    this.updateData(await App.fetch(
+      "state/tutorial-calendar", "POST", amount * 400));
   }
 }
 
