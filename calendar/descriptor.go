@@ -4,21 +4,28 @@ package calendar
 This file contains the module's metadata.
 */
 
-import "github.com/QuestScreen/api"
+import (
+	"github.com/QuestScreen/api"
+	"github.com/QuestScreen/api/config"
+	"github.com/QuestScreen/api/modules"
+	"github.com/QuestScreen/api/resources"
+)
 
-// Descriptor describes this module.
-var Descriptor = api.Module{
-	Name:                "Calendar",
-	ID:                  "tutorial-calendar",
-	ResourceCollections: []api.ResourceSelector{},
+// Descriptor describes the Background module.
+var Descriptor = modules.Module{
+	Name:                "Discworld Calendar",
+	ID:                  "calendar",
+	ResourceCollections: []resources.Selector{},
 	EndpointPaths: []string{
 		"", // endpoint with no further path; handles updating the date
 	},
-	DefaultConfig: &config{Font: &api.SelectableFont{
-		FamilyIndex: 0, Size: api.HeadingFont, Style: api.Bold},
-		Background: &api.SelectableTexturedBackground{
-			Primary:      api.RGBColor{Red: 255, Green: 255, Blue: 255},
-			TextureIndex: -1,
+	DefaultConfig: &calendarConfig{Font: &config.FontSelect{
+		Font: api.Font{FamilyIndex: 0, Size: api.HeadingFont, Style: api.BoldFont}},
+		Background: &config.BackgroundSelect{
+			Background: api.Background{
+				Primary:      api.RGBA{R: 255, G: 255, B: 255, A: 255},
+				TextureIndex: -1,
+			},
 		},
 	},
 	CreateRenderer: newRenderer,

@@ -1,0 +1,30 @@
+name: Plugin Tutorial
+modules: [calendar]
+templates:
+  systems:
+    - name: Discworld
+      id: discworld
+      description: Terry Pratchett's Discworld
+  groups:
+    - name: Discworld Group
+      description: Contains a „Main“ scene with base modules and the calendar
+      system: plugin-tutorial.discworld
+      config: {}
+      scenes:
+        - {name: Main, template: plugin-tutorial.default}
+  scenes:
+    default:
+      name: "Default"
+      description: "A scene with base module and the calendar enabled"
+      config:
+        modules:
+          base.background:
+            enabled: true
+          base.herolist:
+            enabled: true
+          base.overlays:
+            enabled: true
+          base.title:
+            enabled: true
+          plugin-tutorial.calendar:
+            enabled: true

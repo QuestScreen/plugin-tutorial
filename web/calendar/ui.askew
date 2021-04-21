@@ -1,0 +1,96 @@
+<!--title: Web Components
+Now we need do implement the Web Client UI for our module.
+This file will be processed by [askew][3] and contains components described via augmented HTML.
+Here we define the UI that will be used to control our module.
+
+Our HTML should be a table with three rows:
+One for the day, one for the month and one for the year.
+For each row, we want to have three buttons in each direction for altering the date.
+Let's write a component that describes such a row.
+-->
+
+<a:import>
+  "github.com/QuestScreen/api/web"
+</a:import>
+
+<!--
+We'll need this import later – it works just like a Go import.
+-->
+
+<a:component name="calendarRow" params="var kind RowKind" gen-new-init>
+  <a:controller>
+    step(kind RowKind, amount int)
+  </a:controller>
+  <tr>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(-10)) {preventDefault}"
+          ><i class="fas fa-angle-double-left"></i> 10</button>
+    </td>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(-3)) {preventDefault}"
+          ><i class="fas fa-angle-double-left"></i> 3</button>
+    </td>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(-1)) {preventDefault}"
+          ><i class="fas fa-angle-left"></i> 1</button>
+    </td>
+    <td a:bindings="prop(textContent):(value int)"></td>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(1)) {preventDefault}"
+          >1 <i class="fas fa-angle-right"></i></button>
+    </td>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(3)) {preventDefault}"
+          >3 <i class="fas fa-angle-double-right"></i></button>
+    </td>
+    <td>
+      <button a:capture="click:step(go(o.kind), go(10)) {preventDefault}"
+          >10 <i class="fas fa-angle-double-right"></i></button>
+    </td>
+  </tr>
+</a:component>
+
+<!--
+There is a lot going on here.
+First, we name the component `calendarRow` and give it a parameter `var kind RowKind`.
+`RowKind` will be an enumeration describing whether it's the day, month or year row - we will define this type later in our Go code.
+The `var` modifier makes the parameter to be a field of the component type, so that we can access it later.
+
+Next, we define an `<a:controller>`.
+This describes the events the component can emit as Go functions.
+A type that implements these functions can be the controller of an instance of `calendarRow` and then receives these events.
+The only func we define is `step`, which shall move the value of the row of the given kind the given amount of steps.
+
+For the buttons, we are using [Font Awesome][1], which is bundled with the Web Client, for icons.
+The buttons also have a special `a:capture` attribute, which tells askew that a click on this button shall call the controller's `step` function when a button is clicked.
+We retrieve the `kind` value given via parameter with the `data(kind)` binding, and also give the wanted amount of steps for each button.
+
+Now that we defined a row, we can define the component that contains our complete ui:
+-->
+
+<a:component name="calendarUI" params="var srv web.Server">
+  <table class="pure-table pure-table-horizontal">
+    <tbody>
+      <a:embed name="days"   type="calendarRow" args="DayRow" control></a:embed>
+      <a:embed name="months" type="calendarRow" args="MonthRow" control></a:embed>
+      <a:embed name="years"  type="calendarRow" args="YearRow" control></a:embed>
+    </tbody>
+  </table>
+</template>
+
+<!--
+We're using CSS classes from [Pure CSS][2], which is bundled with the Web Client, for styling.
+This relieves us from bundling any custom CSS.
+
+With `<a:embed>`, we embed our row component three times in the table, with the correct kind as argument.
+With the `control` attribute, we make the `calendarUI` component be the controller of the embedded components.
+This means that it will receive the calls to `step` that are issued by the buttons.
+
+The parameter of this component is `srv`, our interface to the server.
+We need to store this so that we can communicate with the server when a button
+is clicked.
+
+ [1]: https://fontawesome.com/
+ [2]: https://purecss.io/
+ [3]: https://github.com/flyx/askew
+-->

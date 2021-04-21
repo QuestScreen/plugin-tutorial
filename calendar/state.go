@@ -6,7 +6,9 @@ A module's state will be written to and loaded from the file system and has inte
 */
 
 import (
-	"github.com/QuestScreen/api"
+	"github.com/QuestScreen/api/comms"
+	"github.com/QuestScreen/api/modules"
+	"github.com/QuestScreen/api/server"
 	"gopkg.in/yaml.v3"
 )
 
@@ -28,8 +30,8 @@ The endpoint is the object that is handling requests coming from the Web Client 
 We need an endpoint object (instead of defining its methods directly on `state`) since we can have more than one endpoint.
 */
 
-func newState(input *yaml.Node, ctx api.ServerContext,
-	ms api.MessageSender) (api.ModuleState, error) {
+func newState(input *yaml.Node, ctx server.Context,
+	ms server.MessageSender) (modules.State, error) {
 	s := new(state)
 	if input == nil {
 		return s, nil
@@ -56,11 +58,11 @@ If that is the case, we issue a warning and load the default value.
 Returning an error from the module constructor will halt the main app, so don't do it as long as you can load some default value!
 */
 
-func (s *state) WebView(ctx api.ServerContext) interface{} {
+func (s *state) Send(ctx server.Context) interface{} {
 	return s.Date
 }
 
-func (s *state) PersistingView(ctx api.ServerContext) interface{} {
+func (s *state) Persist(ctx server.Context) interface{} {
 	return s.Date
 }
 
@@ -73,7 +75,7 @@ In `PersistingView`, we need to give the same data we `Decode` the input to in t
 This is the data that will be written to the scene state on the file system.
 */
 
-func (s *state) CreateRendererData() interface{} {
+func (s *state) CreateRendererData(ctx server.Context) interface{} {
 	return s.Date
 }
 
@@ -85,7 +87,7 @@ The returned value must not contain a pointer to data owned by `state` for threa
 `Date` neither is nor contains a pointer, so we are safe here.
 */
 
-func (s *state) PureEndpoint(index int) api.ModulePureEndpoint {
+func (s *state) PureEndpoint(index int) modules.PureEndpoint {
 	if index != 0 {
 		panic("Endpoint index out of bounds")
 	}
@@ -99,10 +101,10 @@ Since we only have one endpoint, we can assume that index is always `0`.
 */
 
 func (e endpoint) Post(payload []byte) (interface{}, interface{},
-	api.SendableError) {
+	server.Error) {
 	var daysDelta int
-	if err := api.ReceiveData(payload, &daysDelta); err != nil {
-		return nil, nil, err
+	if err := comms.ReceiveData(payload, &daysDelta); err != nil {
+		return nil, nil, &server.BadRequest{Inner: err, Message: "received invalid data"}
 	}
 	e.state.Date = e.state.Date.add(daysDelta)
 
