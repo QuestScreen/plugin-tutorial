@@ -2,8 +2,8 @@ name: Plugin Tutorial
 modules: [calendar]
 templates:
   systems:
-    - name: Discworld
-      id: discworld
+    discworld:
+      name: Discworld
       description: Terry Pratchett's Discworld
   groups:
     - name: Discworld Group
