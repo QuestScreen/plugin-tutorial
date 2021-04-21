@@ -17,10 +17,7 @@ Let's write a component that describes such a row.
 We'll need this import later – it works just like a Go import.
 -->
 
-<a:component name="calendarRow" params="var kind RowKind" gen-new-init>
-  <a:controller>
-    step(kind RowKind, amount int)
-  </a:controller>
+<a:macro name="calendarRow">
   <tr>
     <td>
       <button a:capture="click:step(go(o.kind), go(-10)) {preventDefault}"
@@ -34,7 +31,7 @@ We'll need this import later – it works just like a Go import.
       <button a:capture="click:step(go(o.kind), go(-1)) {preventDefault}"
           ><i class="fas fa-angle-left"></i> 1</button>
     </td>
-    <td a:bindings="prop(textContent):(value int)"></td>
+    <a:slot name="caption"></a:slot>
     <td>
       <button a:capture="click:step(go(o.kind), go(1)) {preventDefault}"
           >1 <i class="fas fa-angle-right"></i></button>
@@ -48,35 +45,64 @@ We'll need this import later – it works just like a Go import.
           >10 <i class="fas fa-angle-double-right"></i></button>
     </td>
   </tr>
+</a:macro>
+
+<!--
+First, we create a macro that describes the general layout of a row.
+Each row has three buttons to the left and another three to the right of the caption.
+
+For the buttons, we are using [Font Awesome][1], which is bundled with the Web Client, for icons.
+The buttons also have a special `a:capture` attribute, which tells askew that a click on this button shall call a `step` function when a button is clicked.
+We retrieve a `kind` value with the `go(o.kind)` binding, and also give the wanted amount of steps for each button.
+
+Where do `step` and `o.kind` come from?
+Well, we don't define them here because this is just a macro.
+We will use that macro for defining two components that each define both `step` and `o.kind`:
+-->
+
+<a:component name="intRow" params="var kind RowKind" gen-new-init>
+  <a:controller>
+    step(kind RowKind, amount int)
+  </a:controller>
+  <a:include name="calendarRow">
+    <td a:slot="caption" a:bindings="prop(textContent):(value int)"></td>
+  </a:include>
+</a:component>
+
+<a:component name="stringRow" params="var kind RowKind" gen-new-init>
+  <a:controller>
+    step(kind RowKind, amount int)
+  </a:controller>
+  <a:include name="calendarRow">
+    <td a:slot="caption" a:bindings="prop(textContent):(value string)"></td>
+  </a:include>
 </a:component>
 
 <!--
-There is a lot going on here.
-First, we name the component `calendarRow` and give it a parameter `var kind RowKind`.
-`RowKind` will be an enumeration describing whether it's the day, month or year row - we will define this type later in our Go code.
-The `var` modifier makes the parameter to be a field of the component type, so that we can access it later.
+Since months are given as string, but day and year as integer, we need to components with differently typed caption.
+The only difference here is that we bind the `textContent` attribute of our caption `<td>` to a different type.
 
-Next, we define an `<a:controller>`.
-This describes the events the component can emit as Go functions.
-A type that implements these functions can be the controller of an instance of `calendarRow` and then receives these events.
+Both components have a parameter `var kind RowKind`.
+`RowKind` will be an enumeration describing whether it's the day, month or year row - we will define this type later in our Go code.
+The `var` modifier makes the parameter to be a field of the component type, so that we can access it via `o.kind`.
+
+The `<a:controller>` describes the events the component can emit as Go functions.
+A type that implements these functions can be the controller of an instance of one of the components and then receives these events.
 The only func we define is `step`, which shall move the value of the row of the given kind the given amount of steps.
 
-For the buttons, we are using [Font Awesome][1], which is bundled with the Web Client, for icons.
-The buttons also have a special `a:capture` attribute, which tells askew that a click on this button shall call the controller's `step` function when a button is clicked.
-We retrieve the `kind` value given via parameter with the `data(kind)` binding, and also give the wanted amount of steps for each button.
-
-Now that we defined a row, we can define the component that contains our complete ui:
+Now we see where both `step` and `o.kind` that we used in the macro come from.
+Using our row components, we can now define the component that contains our complete ui:
 -->
 
 <a:component name="calendarUI" params="var srv web.Server">
   <table class="pure-table pure-table-horizontal">
     <tbody>
-      <a:embed name="days"   type="calendarRow" args="DayRow" control></a:embed>
-      <a:embed name="months" type="calendarRow" args="MonthRow" control></a:embed>
-      <a:embed name="years"  type="calendarRow" args="YearRow" control></a:embed>
+      <a:embed name="days"   type="intRow" args="DayRow" control></a:embed>
+      <a:embed name="months" type="stringRow" args="MonthRow" control></a:embed>
+      <a:embed name="years"  type="intRow" args="YearRow" control></a:embed>
     </tbody>
   </table>
-</template>
+</a:component>
 
 <!--
 We're using CSS classes from [Pure CSS][2], which is bundled with the Web Client, for styling.

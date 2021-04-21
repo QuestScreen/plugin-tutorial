@@ -34,7 +34,7 @@ components which we will use in the code that follows.
 */
 
 func NewState(data json.RawMessage, srv web.Server) (modules.State, error) {
-	var values shared.CalendarState
+	var values shared.UniversityDate
 
 	if err := json.Unmarshal(data, &values); err != nil {
 		return nil, err
@@ -59,10 +59,10 @@ our component.
 The `update` function loads the received values into our UI, it is defined below.
 */
 
-func (o *calendarUI) update(values shared.CalendarState) {
-	o.days.value.Set(values.Day)
-	o.months.value.Set(values.Month)
-	o.years.value.Set(values.Year)
+func (o *calendarUI) update(values shared.UniversityDate) {
+	o.days.value.Set(values.DayOfMonth())
+	o.months.value.Set(values.Month().String())
+	o.years.value.Set(values.Year())
 }
 
 /*
@@ -78,7 +78,7 @@ func (o *calendarUI) step(kind RowKind, amount int) {
 		amount *= 400
 	}
 
-	var values shared.CalendarState
+	var values shared.UniversityDate
 
 	o.srv.Fetch(web.Post, "", amount, &values)
 	o.update(values)

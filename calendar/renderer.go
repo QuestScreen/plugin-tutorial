@@ -7,6 +7,7 @@ import (
 	"github.com/QuestScreen/api/modules"
 	"github.com/QuestScreen/api/render"
 	"github.com/QuestScreen/api/server"
+	shared "github.com/QuestScreen/plugin-tutorial"
 )
 
 /*title: Module Renderer
@@ -17,7 +18,7 @@ This file contains the code that renders the module to the screen.
 type calendarRenderer struct {
 	config         *calendarConfig
 	curTex, oldTex render.Image
-	cur            UniversityDate
+	cur            shared.UniversityDate
 	oldPos         int32
 	oldAlpha       uint8
 }
@@ -54,8 +55,8 @@ Consult the diagram in the [Documentation](/plugins/documentation/#The%20Render%
 */
 
 func (cr *calendarRenderer) createDateSheet(ctx render.Renderer,
-	d UniversityDate) render.Image {
-	str := fmt.Sprintf("%d %s %d", d.dayOfMonth(), d.month(), d.year())
+	d shared.UniversityDate) render.Image {
+	str := fmt.Sprintf("%d %s %d", d.DayOfMonth(), d.Month(), d.Year())
 	strTexture := ctx.RenderText(str, cr.config.Font.Font)
 	defer ctx.FreeImage(&strTexture)
 
@@ -102,7 +103,7 @@ func (cr *calendarRenderer) Rebuild(
 	ctx render.Renderer, data interface{}, configVal interface{}) {
 	cr.config = configVal.(*calendarConfig)
 	if data != nil {
-		cr.cur = data.(UniversityDate)
+		cr.cur = data.(shared.UniversityDate)
 	}
 	ctx.FreeImage(&cr.curTex)
 	cr.curTex = cr.createDateSheet(ctx, cr.cur)
@@ -132,7 +133,7 @@ This is a pretty easy animation; we only need the images of the old and new date
 func (cr *calendarRenderer) InitTransition(
 	ctx render.Renderer, data interface{}) time.Duration {
 	cr.oldTex = cr.curTex
-	cr.cur = data.(UniversityDate)
+	cr.cur = data.(shared.UniversityDate)
 	cr.curTex = cr.createDateSheet(ctx, cr.cur)
 	cr.oldPos = 0
 	return time.Second / 2

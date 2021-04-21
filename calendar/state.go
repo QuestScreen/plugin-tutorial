@@ -9,11 +9,12 @@ import (
 	"github.com/QuestScreen/api/comms"
 	"github.com/QuestScreen/api/modules"
 	"github.com/QuestScreen/api/server"
+	shared "github.com/QuestScreen/plugin-tutorial"
 	"gopkg.in/yaml.v3"
 )
 
 type state struct {
-	Date UniversityDate
+	Date shared.UniversityDate
 }
 
 /*
@@ -38,7 +39,7 @@ func newState(input *yaml.Node, ctx server.Context,
 	}
 	if err := input.Decode(&s.Date); err != nil {
 		ms.Warning("unable to load UniversityDate: " + err.Error())
-		s.Date = UniversityDate(0)
+		s.Date = shared.UniversityDate(0)
 	}
 	return s, nil
 }
@@ -106,7 +107,7 @@ func (e endpoint) Post(payload []byte) (interface{}, interface{},
 	if err := comms.ReceiveData(payload, &daysDelta); err != nil {
 		return nil, nil, &server.BadRequest{Inner: err, Message: "received invalid data"}
 	}
-	e.state.Date = e.state.Date.add(daysDelta)
+	e.state.Date = e.state.Date.Add(daysDelta)
 
 	// first value is sent back to client as JSON.
 	// second value is sent to Renderer.InitTransition.
