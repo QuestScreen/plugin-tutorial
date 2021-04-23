@@ -166,7 +166,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -10)
+				go o.Controller.step(o.kind, -10)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -178,7 +178,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -3)
+				go o.Controller.step(o.kind, -3)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -190,7 +190,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -1)
+				go o.Controller.step(o.kind, -1)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -202,7 +202,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 1)
+				go o.Controller.step(o.kind, 1)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -214,7 +214,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 3)
+				go o.Controller.step(o.kind, 3)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -226,7 +226,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 10)
+				go o.Controller.step(o.kind, 10)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -333,7 +333,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -10)
+				go o.Controller.step(o.kind, -10)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -345,7 +345,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -3)
+				go o.Controller.step(o.kind, -3)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -357,7 +357,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, -1)
+				go o.Controller.step(o.kind, -1)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -369,7 +369,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 1)
+				go o.Controller.step(o.kind, 1)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -381,7 +381,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 3)
+				go o.Controller.step(o.kind, 3)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
@@ -393,7 +393,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
-				o.Controller.step(o.kind, 10)
+				go o.Controller.step(o.kind, 10)
 				arguments[0].Call("preventDefault")
 				return nil
 			})
