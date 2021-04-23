@@ -180,12 +180,15 @@ func (cr *calendarRenderer) Render(ctx render.Renderer) {
 	frame := ctx.OutputSize()
 
 	_, frame = frame.Carve(render.East, 5*ctx.Unit())
-	frame = frame.Position(cr.curTex.Width, cr.curTex.Height, render.Right, render.Top)
 
-	cr.curTex.Draw(ctx, frame, 255)
+	cr.curTex.Draw(ctx,
+		frame.Position(cr.curTex.Width, cr.curTex.Height, render.Right, render.Top),
+		255)
 	if !cr.oldTex.IsEmpty() {
-		frame.Y -= cr.oldPos
-		cr.oldTex.Draw(ctx, frame, cr.oldAlpha)
+		_, frame = frame.Carve(render.North, cr.oldPos)
+		cr.oldTex.Draw(ctx,
+			frame.Position(cr.oldTex.Width, cr.oldTex.Height, render.Right, render.Top),
+			cr.oldAlpha)
 	}
 }
 
@@ -195,7 +198,7 @@ We render the calender to the upper right corner, with a distance of 5 units fro
 This is done by first carving out the 5 units from the right and then positioning the text's rectangle at the top right of the remaining frame.
 
 If `cr.oldTex` contains an image, we're currently animating so we need to render the old date as well.
-For this, we take the values calculated in our `TransitionStep`.
+For this, we use the value `cr.oldPos` calculated in our `TransitionStep` to offset the old texture from the screen top.
 
 This wraps up the code for rendering.
 */

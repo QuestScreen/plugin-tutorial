@@ -18,6 +18,7 @@ We'll need this import later – it works just like a Go import.
 -->
 
 <a:macro name="calendarRow">
+  <tr><td colspan="7" a:assign="prop(textContent)=kind.Caption()"></td></tr>
   <tr>
     <td>
       <button a:capture="click:step(go(o.kind), go(-10)) {preventDefault}"
@@ -49,7 +50,11 @@ We'll need this import later – it works just like a Go import.
 
 <!--
 First, we create a macro that describes the general layout of a row.
-Each row has three buttons to the left and another three to the right of the caption.
+It actually consists of two `<tr>`s, the first one showing the centered row caption and the second one containing the buttons and current value.
+There are three buttons to the left and another three to the right of the value.
+
+We get the row caption from a go expression `kind.Caption()`.
+We will see shortly where `kind` comes from.
 
 For the buttons, we are using [Font Awesome][1], which is bundled with the Web Client, for icons.
 The buttons also have a special `a:capture` attribute, which tells askew that a click on this button shall call a `step` function when a button is clicked.

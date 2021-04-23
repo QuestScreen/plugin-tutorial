@@ -100,6 +100,7 @@ func init() {
 	αintRowTemplate.Set("innerHTML", `
   <!--controller-->
   
+  <tr><td colspan="7"></td></tr>
   <tr>
     <td>
       <button><i class="fas fa-angle-double-left"></i> 10</button>
@@ -160,9 +161,17 @@ func (o *intRow) askewInit(kind RowKind) {
 	o.αcd.Init(αintRowTemplate.Get("content").Call("cloneNode", true))
 	o.kind = kind
 
-	o.value.BoundValue = askew.NewBoundProperty(&o.αcd, "textContent", 3, 7)
+	o.value.BoundValue = askew.NewBoundProperty(&o.αcd, "textContent", 5, 7)
 	{
-		src := o.αcd.Walk(3, 1, 1)
+		block := o.αcd.Walk()
+		{
+			tmp := askew.BoundPropertyAt(
+				askew.WalkPath(block, 3, 0), "textContent")
+			askew.Assign(tmp, kind.Caption())
+		}
+	}
+	{
+		src := o.αcd.Walk(5, 1, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -174,7 +183,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 3, 1)
+		src := o.αcd.Walk(5, 3, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -186,7 +195,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 5, 1)
+		src := o.αcd.Walk(5, 5, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -198,7 +207,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 9, 1)
+		src := o.αcd.Walk(5, 9, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -210,7 +219,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 11, 1)
+		src := o.αcd.Walk(5, 11, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -222,7 +231,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 13, 1)
+		src := o.αcd.Walk(5, 13, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -267,6 +276,7 @@ func init() {
 	αstringRowTemplate.Set("innerHTML", `
   <!--controller-->
   
+  <tr><td colspan="7"></td></tr>
   <tr>
     <td>
       <button><i class="fas fa-angle-double-left"></i> 10</button>
@@ -327,9 +337,17 @@ func (o *stringRow) askewInit(kind RowKind) {
 	o.αcd.Init(αstringRowTemplate.Get("content").Call("cloneNode", true))
 	o.kind = kind
 
-	o.value.BoundValue = askew.NewBoundProperty(&o.αcd, "textContent", 3, 7)
+	o.value.BoundValue = askew.NewBoundProperty(&o.αcd, "textContent", 5, 7)
 	{
-		src := o.αcd.Walk(3, 1, 1)
+		block := o.αcd.Walk()
+		{
+			tmp := askew.BoundPropertyAt(
+				askew.WalkPath(block, 3, 0), "textContent")
+			askew.Assign(tmp, kind.Caption())
+		}
+	}
+	{
+		src := o.αcd.Walk(5, 1, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -341,7 +359,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 3, 1)
+		src := o.αcd.Walk(5, 3, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -353,7 +371,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 5, 1)
+		src := o.αcd.Walk(5, 5, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -365,7 +383,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 9, 1)
+		src := o.αcd.Walk(5, 9, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -377,7 +395,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 11, 1)
+		src := o.αcd.Walk(5, 11, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 
@@ -389,7 +407,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		}
 	}
 	{
-		src := o.αcd.Walk(3, 13, 1)
+		src := o.αcd.Walk(5, 13, 1)
 		{
 			wrapper := js.FuncOf(func(this js.Value, arguments []js.Value) interface{} {
 

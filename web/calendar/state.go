@@ -20,6 +20,17 @@ const (
 	YearRow
 )
 
+func (rk RowKind) Caption() string {
+	switch rk {
+	case DayRow:
+		return "Days"
+	case MonthRow:
+		return "Months"
+	default:
+		return "Years"
+	}
+}
+
 /*
 First, we need to define the `RowKind` type we used in our HTML components.
 This will be seen in the components since the `.askew` file is in the same package.
