@@ -167,6 +167,7 @@ We use the image's height for defining how far it moves.
 // FinishTransition finalizes the transitioning animation.
 func (cr *calendarRenderer) FinishTransition(ctx render.Renderer) {
 	ctx.FreeImage(&cr.oldTex)
+	cr.oldAlpha = 0
 }
 
 /*
@@ -183,7 +184,7 @@ func (cr *calendarRenderer) Render(ctx render.Renderer) {
 
 	cr.curTex.Draw(ctx,
 		frame.Position(cr.curTex.Width, cr.curTex.Height, render.Right, render.Top),
-		255)
+		255-cr.oldAlpha)
 	if !cr.oldTex.IsEmpty() {
 		_, frame = frame.Carve(render.North, cr.oldPos)
 		cr.oldTex.Draw(ctx,

@@ -20,14 +20,14 @@ const (
 	YearRow
 )
 
-func (rk RowKind) Caption() string {
+func (rk RowKind) String() string {
 	switch rk {
 	case DayRow:
-		return "Days"
+		return "Day"
 	case MonthRow:
-		return "Months"
+		return "Month"
 	default:
-		return "Years"
+		return "Year"
 	}
 }
 

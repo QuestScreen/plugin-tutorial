@@ -18,7 +18,7 @@ We'll need this import later – it works just like a Go import.
 -->
 
 <a:macro name="calendarRow">
-  <tr><td colspan="7" a:assign="prop(textContent)=kind.Caption()"></td></tr>
+  <tr><td colspan="7" a:assign="prop(textContent)=kind.String()"></td></tr>
   <tr>
     <td>
       <button a:capture="click:step(go(o.kind), go(-10)) {preventDefault}"

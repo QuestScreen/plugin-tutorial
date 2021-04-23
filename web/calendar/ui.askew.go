@@ -167,7 +167,7 @@ func (o *intRow) askewInit(kind RowKind) {
 		{
 			tmp := askew.BoundPropertyAt(
 				askew.WalkPath(block, 3, 0), "textContent")
-			askew.Assign(tmp, kind.Caption())
+			askew.Assign(tmp, kind.String())
 		}
 	}
 	{
@@ -343,7 +343,7 @@ func (o *stringRow) askewInit(kind RowKind) {
 		{
 			tmp := askew.BoundPropertyAt(
 				askew.WalkPath(block, 3, 0), "textContent")
-			askew.Assign(tmp, kind.Caption())
+			askew.Assign(tmp, kind.String())
 		}
 	}
 	{
