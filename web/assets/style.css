@@ -1,0 +1,20 @@
+.qstut-calendar {
+  border-collapse: collapse;
+  border-bottom: 1px solid black;
+}
+
+.qstut-calendar tr:nth-child(odd) {
+  border-top: 1px solid black;
+  font-variant: small-caps;
+  font-size: x-small;
+  font-weight: bold;
+  text-align: center;
+}
+
+.qstut-calendar td {
+  padding: .5em;
+}
+
+.qstut-calendar td:nth-child(4) {
+  min-width: 5em;
+}

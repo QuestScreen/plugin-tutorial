@@ -180,11 +180,11 @@ func (cr *calendarRenderer) Render(ctx render.Renderer) {
 	frame := ctx.OutputSize()
 
 	_, frame = frame.Carve(render.East, 5*ctx.Unit())
-	frame = frame.Position(cr.curTex.Width, cr.curTex.Height, render.Left, render.Top)
+	frame = frame.Position(cr.curTex.Width, cr.curTex.Height, render.Right, render.Top)
 
 	cr.curTex.Draw(ctx, frame, 255)
 	if !cr.oldTex.IsEmpty() {
-		frame.Y += cr.oldPos
+		frame.Y -= cr.oldPos
 		cr.oldTex.Draw(ctx, frame, cr.oldAlpha)
 	}
 }

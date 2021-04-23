@@ -13,7 +13,7 @@ var αcalendarUITemplate = js.Global().Get("document").Call("createElement", "te
 
 func init() {
 	αcalendarUITemplate.Set("innerHTML", `
-  <table class="pure-table pure-table-horizontal">
+  <table class="qstut-calendar">
     <tbody>
       <!--embed(days)-->
       <!--embed(months)-->

@@ -95,7 +95,7 @@ Using our row components, we can now define the component that contains our comp
 -->
 
 <a:component name="calendarUI" params="var srv web.Server">
-  <table class="pure-table pure-table-horizontal">
+  <table class="qstut-calendar">
     <tbody>
       <a:embed name="days"   type="intRow" args="DayRow" control></a:embed>
       <a:embed name="months" type="stringRow" args="MonthRow" control></a:embed>
@@ -105,8 +105,8 @@ Using our row components, we can now define the component that contains our comp
 </a:component>
 
 <!--
-We're using CSS classes from [Pure CSS][2], which is bundled with the Web Client, for styling.
-This relieves us from bundling any custom CSS.
+We're using the CSS class we defined in `style.css`.
+QuestScreen also has [Pure CSS][2] bundled which can be used for more complex layouts.
 
 With `<a:embed>`, we embed our row component three times in the table, with the correct kind as argument.
 With the `control` attribute, we make the `calendarUI` component be the controller of the embedded components.
